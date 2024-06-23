@@ -1,0 +1,36 @@
+        .suggestion-list {
+            border: 1px solid #ccc;
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute; /* Absolute position relative to the whole page */
+            width: 300px; /* Adjust width as needed */
+            background: #fff;
+            z-index: 1000; /* Ensure the suggestions list is above other elements */
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .selected-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .delete-span {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: bold;
+        }
