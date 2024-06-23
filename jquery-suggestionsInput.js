@@ -1,9 +1,9 @@
 /**
- * @Description: jQuery plugin to provide suggestions based on input and add selected items to a target container.
- * @Name: suggestionsInput
- * @Usage: $('#inputField').suggestionsInput({ url: 'data.json', selector: '#inputField', target: '#selectedContainer', params: { additionalParam1: 'value1', additionalParam2: 'value2' }, inputName: 'selected_product' });
- * @Author: Artlis Code Department - SzpaQ
- * @License: GNU Public
+ * Description: jQuery plugin to provide suggestions based on input and add selected items to a target container.
+ * Name: suggestionsInput
+ * Usage: $('#inputField').suggestionsInput({ url: 'data.json', selector: '#inputField', target: '#selectedContainer', params: { additionalParam1: 'value1', additionalParam2: 'value2' }, inputName: 'selected_product', multiple: false });
+ * Author: Artlis Code Department - SzpaQ
+ * License: GNU Public
  */
 
 (function($) {
@@ -18,7 +18,8 @@
         const params = options.params || {};
         const selector = options.selector;
         const target = options.target;
-        const inputName = options.inputName || 'product_id';
+        const inputName = options.inputName || 'suggested_id';
+        const multiple = options.multiple !== undefined ? options.multiple : true;
 
         const inputField = $(selector);
         const suggestionContainer = $('<div class="suggestion-list"></div>').appendTo('body');
@@ -35,12 +36,21 @@
 
         // Function to add selected item to the target container
         function addSelectedItem(name, id) {
+            if (!multiple) {
+                $(target).empty();
+            }
+
             const itemContainer = $('<div class="selected-item"></div>');
 
             const nameElement = $('<span></span>').text(name);
 
+            let inputFieldName = inputName;
+            if (multiple && !inputFieldName.endsWith('[]')) {
+                inputFieldName += '[]';
+            }
+
             const hiddenInput = $('<input type="hidden">')
-                .attr('name', inputName)
+                .attr('name', inputFieldName)
                 .val(id);
 
             const deleteSpan = $('<span class="delete-span">X</span>').on('click', function() {
